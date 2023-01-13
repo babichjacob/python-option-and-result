@@ -1,6 +1,6 @@
 <h1 align="center">🤷 Option and Result</h1>
 
-This library uses code copy and pasted from [Peijun Ma's `option` library](https://github.com/MaT1g3R/option), which they have generously published under the MIT license. 🙏
+This library uses code copied and pasted from [Peijun Ma's `option` library](https://github.com/MaT1g3R/option), which they have generously published under the MIT license. 🙏
 
 This is a Python implementation of Rust's [`Option`](https://doc.rust-lang.org/std/option/index.html) and [`Result`](https://doc.rust-lang.org/std/result/index.html) types in order to help make fallible functions identifiable and more robust than typical exceptions.
 
@@ -29,7 +29,7 @@ assert combinatoric_result.unwrap_err() == "gah! an error!"
 
 # more methods on Options and Results are available like the Rust documentation shows
 
-# there is also MatchesNone, MatchesSome, MatchesOk, and MatchesErr 
+# there is also MatchesNone, MatchesSome, MatchesOk, and MatchesErr
 # for use with Python 3.10's new structural pattern matching feature
 ```
 
