@@ -35,7 +35,7 @@
 This module contains the Option and Result classes.
 """
 
-from dataclasses import dataclass
+from sys import version_info
 from typing import Any, Callable, Generic, Iterator, Optional, Protocol, TypeVar, Union
 
 S = TypeVar("S")
@@ -46,14 +46,16 @@ E = TypeVar("E")
 U = TypeVar("U")
 
 
-@dataclass(frozen=True, slots=True)
-class MatchesNone:
-    pass
+if version_info > (3, 7):
+    from dataclasses import dataclass
 
+    @dataclass(frozen=True, slots=True)
+    class MatchesNone:
+        pass
 
-@dataclass(frozen=True, slots=True)
-class MatchesSome(Generic[S]):
-    value: S
+    @dataclass(frozen=True, slots=True)
+    class MatchesSome(Generic[S]):
+        value: S
 
 
 class SupportsDunderLT(Protocol):
@@ -433,11 +435,13 @@ class Option(Generic[S]):
 
         return NONE()
 
-    def to_matchable(self) -> "MatchesSome[S] | MatchesNone":
-        if self._is_some:
-            return MatchesSome(self._val)  # type: ignore
+    if version_info > (3, 7):
 
-        return MatchesNone()
+        def to_matchable(self) -> "MatchesSome[S] | MatchesNone":
+            if self._is_some:
+                return MatchesSome(self._val)  # type: ignore
+
+            return MatchesNone()
 
     def __hash__(self) -> int:
         return hash((self.__class__, self._is_some, self._val))
@@ -842,11 +846,13 @@ class Result(Generic[O, E]):
             return NONE()
         return Some(Err(self._val))  # type: ignore
 
-    def to_matchable(self) -> MatchesOk[O] | MatchesErr[E]:
-        if self._is_ok:
-            return MatchesOk(self._val)  # type: ignore
-        else:
-            return MatchesErr(self._val)  # type: ignore
+    if version_info > (3, 7):
+
+        def to_matchable(self) -> MatchesOk[O] | MatchesErr[E]:
+            if self._is_ok:
+                return MatchesOk(self._val)  # type: ignore
+            else:
+                return MatchesErr(self._val)  # type: ignore
 
     def __repr__(self) -> str:
         return f"Ok({self._val!r})" if self._is_ok else f"Err({self._val!r})"
