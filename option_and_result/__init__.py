@@ -49,11 +49,11 @@ U = TypeVar("U")
 if version_info > (3, 7):
     from dataclasses import dataclass
 
-    @dataclass(frozen=True, slots=True)
+    @dataclass(frozen=True)
     class MatchesNone:
         pass
 
-    @dataclass(frozen=True, slots=True)
+    @dataclass(frozen=True)
     class MatchesSome(Generic[S]):
         value: S
 
@@ -527,12 +527,12 @@ def NONE() -> Option[Any]:
 
 
 if version_info > (3, 7):
-    @dataclass(frozen=True, slots=True)
+    @dataclass(frozen=True)
     class MatchesOk(Generic[O]):
         value: O
 
 
-    @dataclass(frozen=True, slots=True)
+    @dataclass(frozen=True)
     class MatchesErr(Generic[E]):
         value: E
 
