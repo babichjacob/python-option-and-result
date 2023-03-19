@@ -526,14 +526,15 @@ def NONE() -> Option[Any]:
     return Option(None, False, _force=True)
 
 
-@dataclass(frozen=True, slots=True)
-class MatchesOk(Generic[O]):
-    value: O
+if version_info > (3, 7):
+    @dataclass(frozen=True, slots=True)
+    class MatchesOk(Generic[O]):
+        value: O
 
 
-@dataclass(frozen=True, slots=True)
-class MatchesErr(Generic[E]):
-    value: E
+    @dataclass(frozen=True, slots=True)
+    class MatchesErr(Generic[E]):
+        value: E
 
 
 class Result(Generic[O, E]):
