@@ -437,7 +437,7 @@ class Option(Generic[S]):
 
     if version_info > (3, 7):
 
-        def to_matchable(self) -> "MatchesSome[S] | MatchesNone":
+        def to_matchable(self) -> "Union[MatchesSome[S], MatchesNone]":
             if self._is_some:
                 return MatchesSome(self._val)  # type: ignore
 
@@ -527,10 +527,10 @@ def NONE() -> Option[Any]:
 
 
 if version_info > (3, 7):
+
     @dataclass(frozen=True)
     class MatchesOk(Generic[O]):
         value: O
-
 
     @dataclass(frozen=True)
     class MatchesErr(Generic[E]):
@@ -849,7 +849,7 @@ class Result(Generic[O, E]):
 
     if version_info > (3, 7):
 
-        def to_matchable(self) -> MatchesOk[O] | MatchesErr[E]:
+        def to_matchable(self) -> Union[MatchesOk[O], MatchesErr[E]]:
             if self._is_ok:
                 return MatchesOk(self._val)  # type: ignore
             else:
